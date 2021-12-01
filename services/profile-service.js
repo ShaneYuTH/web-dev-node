@@ -1,31 +1,19 @@
-let profile = require('../data/profile.json');
+const dao = require('../db/profile/profile-dao');
 
 module.exports = (app) => {
+    const findProfileById = (req, res) =>
+        dao.findProfileById(req.params.id)
+            .then(profile => res.json(profile));
 
-    const getCurrentProfile = (req, res) => {
-        res.json(profile);
-    }
+    const findAllProfile = (req, res) =>
+        dao.findAllProfile()
+            .then(profile => res.json(profile));
 
-    const updateCurrentProfile = (req, res) => {
-        const name = req.body.name;
-        const bio = req.body.bio;
-        const location = req.body.location;
-        const website = req.body.website;
-        const dateOfBirth = req.body.dateOfBirth;
+    const updateProfile = (req, res) =>
+        dao.updateProfile(req.params.id, req.body)
+            .then(status => res.send(status));
 
-        const updatedProfile = {
-            ...profile,
-            name: name,
-            bio: bio,
-            location: location,
-            website: website,
-            dateOfBirth: dateOfBirth,
-        }
-
-        res.json(updatedProfile);
-    }
-
-    app.get('/api/profile', getCurrentProfile);
-    app.put('/api/profile', updateCurrentProfile);
+    app.get("/rest/profile/:id", findProfileById);
+    app.get("/rest/profile", findAllProfile);
+    app.put("/rest/profile/:id", updateProfile);
 }
-

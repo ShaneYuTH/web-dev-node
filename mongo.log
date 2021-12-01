@@ -1,0 +1,329 @@
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+
+> use webdev
+switched to db webdev
+
+> db.movies.insert({title: 'Aliens', rating: 4.5})
+WriteResult({ "nInserted" : 1 })
+
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+webdev  0.000GB
+
+> db.movies.insert({title: 'Terminator', rating: 4.8})
+WriteResult({ "nInserted" : 1 })
+> db.movies.insert({title: 'Avatar', rating: 4.7})
+WriteResult({ "nInserted" : 1 })
+> db.movies.insert({title: 'Dune', rating: 4.9})
+WriteResult({ "nInserted" : 1 })
+
+> db.movies.find()
+{ "_id" : ObjectId("6198641f3068f9c23cb92e50"), "title" : "Aliens", "rating" : 4.5 }
+{ "_id" : ObjectId("6198646b3068f9c23cb92e51"), "title" : "Terminator", "rating" : 4.8 }
+{ "_id" : ObjectId("619864863068f9c23cb92e52"), "title" : "Avatar", "rating" : 4.7 }
+{ "_id" : ObjectId("6198649d3068f9c23cb92e53"), "title" : "Dune", "rating" : 4.9 }
+
+> db.movies.find({_id: ObjectId("6198641f3068f9c23cb92e50")})
+{ "_id" : ObjectId("6198641f3068f9c23cb92e50"), "title" : "Aliens", "rating" : 4.5 }
+
+> db.movies.find({title: 'Aliens'})
+{ "_id" : ObjectId("6198641f3068f9c23cb92e50"), "title" : "Aliens", "rating" : 4.5 }
+
+> db.movies.find().pretty()
+{
+        "_id" : ObjectId("6198641f3068f9c23cb92e50"),
+        "title" : "Aliens",
+        "rating" : 4.5
+}
+{
+        "_id" : ObjectId("6198646b3068f9c23cb92e51"),
+        "title" : "Terminator",
+        "rating" : 4.8
+}
+{
+        "_id" : ObjectId("619864863068f9c23cb92e52"),
+        "title" : "Avatar",
+        "rating" : 4.7
+}
+{
+        "_id" : ObjectId("6198649d3068f9c23cb92e53"),
+        "title" : "Dune",
+        "rating" : 4.9
+}
+
+> db.movies.updateOne({title: "Avatar"}, {$set: {rating: 4.9}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+
+> db.movies.updateOne({_id: ObjectId("6198649d3068f9c23cb92e53")}, {$set: {rating: 4.5}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+
+> db.movies.deleteOne({_id: ObjectId("6198641f3068f9c23cb92e50")})
+{ "acknowledged" : true, "deletedCount" : 1 }
+
+> db.movies.find()
+{ "_id" : ObjectId("6198646b3068f9c23cb92e51"), "title" : "Terminator", "rating" : 4.8 }
+{ "_id" : ObjectId("619864863068f9c23cb92e52"), "title" : "Avatar", "rating" : 4.9 }
+{ "_id" : ObjectId("6198649d3068f9c23cb92e53"), "title" : "Dune", "rating" : 4.5 }
+
+> db.tweets.insert({
+...     "topic": "Web Development",
+...     "userName": "ReactJS",
+...     "tweet": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",n reprehenderit in voluptate velit esse cillum dolo
+...     "attachments": {
+...       "video": "unKvMC3Y1kI"
+...     },
+...     "logo-image": "/images/react-blue.png",
+...     "avatar-image": "/images/react-blue.png",
+...     "stats": {
+...       "comments": 123,
+...       "retweets": 234,
+...       "likes": 345
+...     }
+...   })
+WriteResult({ "nInserted" : 1 })
+> db.tweets.insert({
+...     "topic": "Space",
+...     "tweet": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",n reprehenderit in voluptate velit esse cillum dolo
+...     "attachments": {
+...       "image": "/images/starship.png"
+...     },
+...     "time": "last month",
+...     "logo-image": "/images/node.png",
+...     "avatar-image": "/images/node.png",
+...     "tweets": "120K",
+...     "stats": {
+...       "comments": 123,
+...       "retweets": 234,
+...       "likes": 345
+...     }
+...   })
+WriteResult({ "nInserted" : 1 })
+> db.tweets.insert({
+...     "topic": "Space",
+...     "userName": "Scott Manley",
+...     "verified": true,
+...     "tweet": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",n reprehenderit in voluptate velit esse cillum dolo
+...     "logo-image": "/images/js.png",
+...     "avatar-image": "/images/js.png",
+...     "tweets": "123K",
+...     "stats": {
+...       "comments": 123,
+...       "retweets": 234,
+...       "likes": 345
+...     }
+...   })
+WriteResult({ "nInserted" : 1 })
+> db.tweets.insert({
+...     "topic": "Web Development",
+...     "tweet": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",n reprehenderit in voluptate velit esse cillum dolo
+...     "time": "last week",
+...     "logo-image": "/images/jquery.png",
+...     "avatar-image": "/images/jquery.png",
+...     "tweets": "122K",
+...     "stats": {
+...       "comments": 123,
+...       "retweets": 234,
+...       "likes": 345
+...     }
+...   })
+WriteResult({ "nInserted" : 1 })
+> db.tweets.insert({
+...     "topic": "Web Development",
+...     "tweet": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",n reprehenderit in voluptate velit esse cillum dolo
+...     "time": "last month",
+...     "logo-image": "/images/node.png",
+...     "avatar-image": "/images/node.png",
+...     "tweets": "120K",
+...     "stats": {
+...       "comments": 123,
+...       "retweets": 234,
+...       "likes": 345
+...     }
+...   })
+WriteResult({ "nInserted" : 1 })
+
+> db.tweets.find().pretty()
+{
+        "_id" : ObjectId("619af3e93068f9c23cb92e54"),
+        "topic" : "Web Development",
+        "userName" : "ReactJS",
+        "verified" : false,
+        "handle" : "ReactJS",
+        "time" : "2h",
+        "title" : "React.js is a component based front end library that makes it very easy to build Single Page Applications or SPAs",
+        "tweet" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+        "attachments" : {
+                "video" : "unKvMC3Y1kI"
+        },
+        "logo-image" : "/images/react-blue.png",
+        "avatar-image" : "/images/react-blue.png",
+        "stats" : {
+                "comments" : 123,
+                "retweets" : 234,
+                "likes" : 345
+        }
+}
+{
+        "_id" : ObjectId("619af4103068f9c23cb92e55"),
+        "topic" : "Space",
+        "userName" : "SpaceX",
+        "verified" : false,
+        "handle" : "spacex",
+        "title" : "",
+        "tweet" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+        "attachments" : {
+                "image" : "/images/starship.png"
+        },
+        "time" : "last month",
+        "logo-image" : "/images/node.png",
+        "avatar-image" : "/images/node.png",
+        "tweets" : "120K",
+        "stats" : {
+                "comments" : 123,
+                "retweets" : 234,
+                "likes" : 345
+        }
+}
+{
+        "_id" : ObjectId("619af42f3068f9c23cb92e56"),
+        "topic" : "Space",
+        "userName" : "Scott Manley",
+        "verified" : true,
+        "handle" : "DJSnM",
+        "published-date" : "2020-12-10",
+        "time" : "1 day",
+        "title" : "JavaScript is programming language that can run on browsers as well as desktops",
+        "tweet" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+        "logo-image" : "/images/js.png",
+        "avatar-image" : "/images/js.png",
+        "tweets" : "123K",
+        "stats" : {
+                "comments" : 123,
+                "retweets" : 234,
+                "likes" : 345
+        }
+}
+{
+        "_id" : ObjectId("619af4463068f9c23cb92e57"),
+        "topic" : "Web Development",
+        "userName" : "jQuery",
+        "verified" : false,
+        "handle" : "jQuery",
+        "title" : "jQuery",
+        "tweet" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+        "time" : "last week",
+        "logo-image" : "/images/jquery.png",
+        "avatar-image" : "/images/jquery.png",
+        "tweets" : "122K",
+        "stats" : {
+                "comments" : 123,
+                "retweets" : 234,
+                "likes" : 345
+        }
+}
+{
+        "_id" : ObjectId("619af4593068f9c23cb92e58"),
+        "topic" : "Web Development",
+        "userName" : "NodeJS",
+        "verified" : true,
+        "handle" : "NodeJS",
+        "title" : "",
+        "tweet" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+        "time" : "last month",
+        "logo-image" : "/images/node.png",
+        "avatar-image" : "/images/node.png",
+        "tweets" : "120K",
+        "stats" : {
+                "comments" : 123,
+                "retweets" : 234,
+                "likes" : 345
+        }
+}
+
+db.who.insert({   "avatarIcon": "/images/java.png", "userName": "Java", "handle": "Java" })
+WriteResult({ "nInserted" : 1 })
+
+db.who.insert({   "avatarIcon": "/images/relativity-space.png", "userName": "Relativity Space", "handle": "relativityspace" })
+WriteResult({ "nInserted" : 1 })
+
+db.who.insert({   "avatarIcon": "/images/virgin.png", "userName": "Virgin Galactic", "handle": "virgingalactic" })
+WriteResult({ "nInserted" : 1 })
+
+db.who.insert({   "avatarIcon": "/images/nasa.png", "userName": "NASA", "handle": "NASA" })
+WriteResult({ "nInserted" : 1 })
+
+db.who.insert({   "avatarIcon": "/images/tesla.png", "userName": "Tesla", "handle": "Tesla" })
+WriteResult({ "nInserted" : 1 })
+
+> db.who.find().pretty()
+{
+        "_id" : ObjectId("61a562b53068f9c23cb92e59"),
+        "avatarIcon" : "/images/java.png",
+        "userName" : "Java",
+        "handle" : "Java"
+}
+{
+        "_id" : ObjectId("61a564c302bd1b434baf89aa"),
+        "avatarIcon" : "/images/relativity-space.png",
+        "userName" : "Relativity Space",
+        "handle" : "relativityspace"
+}
+{
+        "_id" : ObjectId("61a5651302bd1b434baf89ab"),
+        "avatarIcon" : "/images/virgin.png",
+        "userName" : "Virgin Galactic",
+        "handle" : "virgingalactic"
+}
+{
+        "_id" : ObjectId("61a5653102bd1b434baf89ac"),
+        "avatarIcon" : "/images/nasa.png",
+        "userName" : "NASA",
+        "handle" : "NASA"
+}
+{
+        "_id" : ObjectId("61a5653f02bd1b434baf89ad"),
+        "avatarIcon" : "/images/tesla.png",
+        "userName" : "Tesla",
+        "handle" : "Tesla"
+}
+
+> db.profile.insert({
+...   "firstName": "Jose",
+...   "lastName": "Annunziato",
+...   "name": "Jose Annunziato",
+...   "handle": "jannunzi",
+...   "profilePicture": "/images/jose.jpg",
+...   "bio": "Faculty, Software Engineer, AI, Space, and renewable enthusiast. Retweets and likes are not endorsements.",, AI, Space, and renewable enthusiast. Re
+...   "website": "youtube.com/webdevtv",
+...   "location": "Boston, MA",
+...   "dateOfBirth": "7/7/1968",
+...   "dateJoined": "4/2009",
+...   "followingCount": 312,
+...   "followersCount": 180,
+...   "tweetsCount": 5196
+... })
+WriteResult({ "nInserted" : 1 })
+
+> db.profile.find().pretty()
+{
+        "_id" : ObjectId("61a5667302bd1b434baf89ae"),
+        "firstName" : "Jose",
+        "lastName" : "Annunziato",
+        "name" : "Jose Annunziato",
+        "handle" : "jannunzi",
+        "profilePicture" : "/images/jose.jpg",
+        "bannerPicture" : "/images/ProfileBG.jpg",
+        "bio" : "Faculty, Software Engineer, AI, Space, and renewable enthusiast. Retweets and likes are not endorsements.",
+        "website" : "youtube.com/webdevtv",
+        "location" : "Boston, MA",
+        "dateOfBirth" : "7/7/1968",
+        "dateJoined" : "4/2009",
+        "followingCount" : 312,
+        "followersCount" : 180,
+        "tweetsCount" : 5196
+}
